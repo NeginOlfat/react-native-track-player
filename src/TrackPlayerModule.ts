@@ -1,3 +1,4 @@
-import { NativeModules } from 'react-native';
-const { TrackPlayerModule } = NativeModules;
-export default TrackPlayerModule;
+import TrackPlayerModule from "./NativeTrackPlayer";
+
+const TrackPlayer = TrackPlayerModule
+export default TrackPlayer;

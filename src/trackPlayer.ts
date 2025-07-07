@@ -3,6 +3,7 @@ import {
   DeviceEventEmitter,
   NativeEventEmitter,
   Platform,
+  NativeModules
 } from 'react-native';
 
 import TrackPlayer from './TrackPlayerModule';
@@ -21,10 +22,8 @@ import type {
 } from './interfaces';
 import resolveAssetSource from './resolveAssetSource';
 
-const emitter =
-  Platform.OS !== 'android'
-    ? new NativeEventEmitter(TrackPlayer)
-    : DeviceEventEmitter;
+const { AudioEventEmitter } = NativeModules;
+const emitter = new NativeEventEmitter(AudioEventEmitter);
 
 // MARK: - Helpers
 
@@ -32,8 +31,8 @@ function resolveImportedAssetOrPath(pathOrAsset: string | number | undefined) {
   return pathOrAsset === undefined
     ? undefined
     : typeof pathOrAsset === 'string'
-    ? pathOrAsset
-    : resolveImportedAsset(pathOrAsset);
+      ? pathOrAsset
+      : resolveImportedAsset(pathOrAsset);
 }
 
 function resolveImportedAsset(id?: number) {
@@ -63,14 +62,10 @@ export async function setupPlayer(options: PlayerOptions = {}): Promise<void> {
  * Register the playback service. The service will run as long as the player runs.
  */
 export function registerPlaybackService(factory: () => ServiceHandler) {
-  if (Platform.OS === 'android') {
-    // Registers the headless task
-    AppRegistry.registerHeadlessTask('TrackPlayer', factory);
-  } else if (Platform.OS === 'web') {
-    factory()();
-  } else {
-    // Initializes and runs the service in the next tick
-    setImmediate(factory());
+  try {
+    factory();
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -417,7 +412,7 @@ export async function getTrack(index: number): Promise<Track | undefined> {
 /**
  * Gets the whole queue.
  */
-export async function getQueue(): Promise<Track[]> {
+export async function getQueue(): Promise<Object[]> {
   return TrackPlayer.getQueue();
 }
 

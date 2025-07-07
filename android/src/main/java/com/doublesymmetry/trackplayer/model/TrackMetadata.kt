@@ -3,7 +3,7 @@ package com.doublesymmetry.trackplayer.model
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.media.RatingCompat
+import androidx.media3.common.Rating as RatingCompat
 import com.doublesymmetry.trackplayer.extensions.NumberExt.Companion.toMilliseconds
 import com.doublesymmetry.trackplayer.utils.BundleUtils
 
@@ -30,6 +30,6 @@ abstract class TrackMetadata {
             null
         }
 
-        rating = BundleUtils.getRating(bundle, "rating", ratingType)
+        // rating = BundleUtils.getRating(bundle, "rating", ratingType)
     }
 }

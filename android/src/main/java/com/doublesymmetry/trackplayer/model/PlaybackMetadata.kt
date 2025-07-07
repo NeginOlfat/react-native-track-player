@@ -1,13 +1,15 @@
 package com.doublesymmetry.trackplayer.model
 
-import com.google.android.exoplayer2.metadata.Metadata
-import com.google.android.exoplayer2.metadata.flac.VorbisComment
-import com.google.android.exoplayer2.metadata.icy.IcyHeaders
-import com.google.android.exoplayer2.metadata.icy.IcyInfo
-import com.google.android.exoplayer2.metadata.id3.TextInformationFrame
-import com.google.android.exoplayer2.metadata.id3.UrlLinkFrame
-import com.google.android.exoplayer2.metadata.mp4.MdtaMetadataEntry
+import androidx.media3.common.Metadata
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.extractor.metadata.vorbis.VorbisComment
+import androidx.media3.extractor.metadata.icy.IcyHeaders
+import androidx.media3.extractor.metadata.icy.IcyInfo
+import androidx.media3.extractor.metadata.id3.TextInformationFrame
+import androidx.media3.extractor.metadata.id3.UrlLinkFrame
+import androidx.media3.container.MdtaMetadataEntry
 
+@UnstableApi
 data class PlaybackMetadata(
     val source: String,
     var title: String? = null,
@@ -125,27 +127,27 @@ data class PlaybackMetadata(
                     when (entry.key) {
                         "TITLE" -> {
                             handled = true
-                            title = entry.value;
+                            title = entry.value.toString()
                         }
                         "ARTIST" -> {
                             handled = true
-                            artist = entry.value;
+                            artist = entry.value.toString()
                         }
                         "ALBUM" -> {
                             handled = true
-                            album = entry.value;
+                            album = entry.value.toString()
                         }
                         "DATE" -> {
                             handled = true
-                            date = entry.value
+                            date = entry.value.toString()
                         }
                         "GENRE" -> {
                             handled = true
-                            genre = entry.value
+                            genre = entry.value.toString()
                         }
                         "URL" -> {
                             handled = true
-                            url = entry.value
+                            url = entry.value.toString()
                         }
                     }
                 }
@@ -172,23 +174,23 @@ data class PlaybackMetadata(
                     when (entry.key) {
                         "com.apple.quicktime.title" -> {
                             handled = true
-                            title = entry.value.toString();
+                            title = entry.value.toString()
                         }
                         "com.apple.quicktime.artist" -> {
                             handled = true
-                            artist = entry.value.toString();
+                            artist = entry.value.toString()
                         }
                         "com.apple.quicktime.album" -> {
                             handled = true
-                            album = entry.value.toString();
+                            album = entry.value.toString()
                         }
                         "com.apple.quicktime.creationdate" -> {
                             handled = true
-                            date = entry.value.toString();
+                            date = entry.value.toString()
                         }
                         "com.apple.quicktime.genre" -> {
                             handled = true
-                            genre = entry.value.toString();
+                            genre = entry.value.toString()
                         }
                     }
                 }

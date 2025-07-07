@@ -1,9 +1,11 @@
 package com.doublesymmetry.trackplayer.model
 
+import androidx.media3.common.util.UnstableApi
 import com.doublesymmetry.kotlinaudio.models.AudioItem
 import com.doublesymmetry.kotlinaudio.models.AudioItemOptions
 import com.doublesymmetry.kotlinaudio.models.MediaType
 
+@UnstableApi
 data class TrackAudioItem(
     val track: Track,
     override val type: MediaType,

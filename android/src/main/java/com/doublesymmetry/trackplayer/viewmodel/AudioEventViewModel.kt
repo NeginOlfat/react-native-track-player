@@ -1,27 +1,25 @@
-package com.doublesymmetry.trackplayer.module
+package com.doublesymmetry.trackplayer.viewmodel
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
+import android.os.Bundle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-/**
- * @author Milen Pivchev @mpivchev
- */
-class MusicEvents(private val reactContext: ReactContext) : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val event = intent.getStringExtra("event")
-        val data = intent.getBundleExtra("data")
-        val map = if (data != null) Arguments.fromBundle(data) else null
-        reactContext.getJSModule(RCTDeviceEventEmitter::class.java).emit(
-            event!!, map
-        )
+object AudioEventViewModel : ViewModel() {
+
+    private val _event = MutableLiveData<EventBundle>()
+    val event: LiveData<EventBundle> get() = _event
+
+    fun emit(eventName: String, data: Bundle? = null) {
+        _event.postValue(EventBundle(eventName, data))
     }
 
-    companion object {
-        // Media Control Events
+    data class EventBundle(
+        val name: String,
+        val data: Bundle?
+    )
+
+// Media Control Events
         const val BUTTON_PLAY = "remote-play"
         const val BUTTON_PLAY_FROM_ID = "remote-play-id"
         const val BUTTON_PLAY_FROM_SEARCH = "remote-play-search"
@@ -56,5 +54,6 @@ class MusicEvents(private val reactContext: ReactContext) : BroadcastReceiver() 
         const val PLAYER_ERROR = "player-error"
 
         const val EVENT_INTENT = "com.doublesymmetry.trackplayer.event"
-    }
+        
+    
 }

@@ -6,7 +6,11 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-native",
-    "lib": ["es2017", "DOM", "DOM.Iterable"],
+    "lib": [
+      "es2017",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "moduleResolution": "node",
     "outDir": "./lib",
     "strict": true,
@@ -14,6 +18,12 @@
     "module": "esnext",
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": [
+    "src",
+    "src/NativeTrackPlayer.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*"
+  ]
 }

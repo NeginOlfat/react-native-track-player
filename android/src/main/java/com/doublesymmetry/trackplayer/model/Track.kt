@@ -3,14 +3,16 @@ package com.doublesymmetry.trackplayer.model
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import androidx.media3.common.util.UnstableApi
 import com.doublesymmetry.kotlinaudio.models.AudioItemOptions
 import com.doublesymmetry.kotlinaudio.models.MediaType
 import com.doublesymmetry.trackplayer.utils.BundleUtils
-import com.google.android.exoplayer2.upstream.RawResourceDataSource
-
+import androidx.media3.datasource.RawResourceDataSource
 /**
  * @author Milen Pivchev @mpivchev
  */
+
+@UnstableApi
 class Track(context: Context, bundle: Bundle, ratingType: Int) : TrackMetadata() {
     var uri: Uri? = null
     var resourceId: Int?
