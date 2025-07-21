@@ -599,16 +599,20 @@ class MusicModule(reactContext: ReactApplicationContext) :ServiceConnection,
 
     override fun getTrack(index: Double, callback: Promise) {
         scope.launch {
-            val indexInt = index.toInt()
             if (verifyServiceBoundOrReject(callback)) return@launch
 
-            if (indexInt >= 0 && indexInt < musicService.tracks.size) {
-                callback.resolve(Arguments.fromBundle(musicService.tracks[indexInt].originalItem))
+            val indexInt = index.toInt()
+            val track = musicService.tracks.getOrNull(indexInt)
+            val originalItem = track?.originalItem
+
+            if (originalItem is Bundle) {
+                callback.resolve(Arguments.fromBundle(originalItem))
             } else {
                 callback.resolve(null)
             }
         }
     }
+
 
     override fun getQueue(callback: Promise) {
         scope.launch {
@@ -644,14 +648,19 @@ class MusicModule(reactContext: ReactApplicationContext) :ServiceConnection,
     override fun getActiveTrack(callback: Promise) {
         scope.launch {
             if (verifyServiceBoundOrReject(callback)) return@launch
-            callback.resolve(
-                if (musicService.tracks.isEmpty()) null
-                else Arguments.fromBundle(
-                    musicService.tracks[musicService.getCurrentTrackIndex()].originalItem
-                )
-            )
+
+            val index = musicService.getCurrentTrackIndex()
+            val track = musicService.tracks.getOrNull(index)
+            val originalItem = track?.originalItem
+
+            if (originalItem is Bundle) {
+                callback.resolve(Arguments.fromBundle(originalItem))
+            } else {
+                callback.resolve(null)
+            }
         }
     }
+
 
     override fun getDuration(callback: Promise) {
         scope.launch {
